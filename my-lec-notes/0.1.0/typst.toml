@@ -1,0 +1,10 @@
+[package]
+name = "my-lec-notes"
+version = "0.1.0"
+entrypoint = "template/main.typ"
+description = "Auto-incrementing homework template"
+authors = ["Maksim"]
+
+[template]
+path = "template"
+entrypoint = "main.typ"
