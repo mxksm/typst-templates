@@ -225,6 +225,47 @@
 // CATEGORY THEORY & TOPOLOGY
 // ====================
 
+// Topology/category theory functions
+#let natTran(A,F,G,B) = $#box(baseline: 40%,
+diagram(
+  mark-scale: 80%,
+  label-size: 0.6em,
+  node((0, 0), $#A$, name: <A>),
+  node((1, 0), $#B$, name: <B>),
+  edge(<A>, <B>, $#F$, "->", shift: + 3pt),
+  edge(<A>, <B>, $#G$, "->", shift: - 3pt, label-side: right),
+))$
+
+#let natTranA(A,F,G,B,alpha) = $#box(baseline: 40%,
+diagram(
+  mark-scale: 80%,
+  label-size: 0.6em,
+  node((0, 0), $#A$, name: <A>),
+  node((1.2, 0), $#B$, name: <B>),
+  node((0.6, - 0.4), $$, name: <F>),
+  node((0.6, + 0.4), $$, name: <G>),
+  edge(<A>, "->", <B>, $#F$, bend: + 30deg),
+  edge(<A>, "->", <B>, $#G$, bend: - 30deg, label-side: right),
+  edge(<F>, "=>", <G>, $#alpha$, label-side: left)
+))$
+
+#let natTranAB(A,F,G,H,B,alpha,beta) = $#box(baseline: 40%, 
+diagram(
+  mark-scale: 80%,
+  label-size: 0.6em,
+  let h = 0.55,
+  node((0, 0),  $#A$, name: <A>),
+  node((2, 0),  $#B$, name: <B>),
+  node((1, -h), [],   name: <F>),
+  node((1, 0),  [],   name: <G>, outset: 5pt),
+  node((1, h),  [],   name: <H>),
+  edge(<A>, "->", <B>, $#F$,    bend: + 50deg),
+  edge(<A>, "->", <B>, $#G$,    label-anchor: "center", label-sep: 0pt),
+  edge(<A>, "->", <B>, $#H$,    bend: - 50deg,          label-side: right),
+  edge(<F>, "=>", <G>, $#alpha$, label-side: left),
+  edge(<G>, "=>", <H>, $#beta$,  label-side: left),
+))$
+
 // Basic symbols
 #let pt = $p t$
 #let ob = "ob"
@@ -243,8 +284,11 @@
 #let Fun    = $bold("Fun")$
 #let Top    = $bold("Top")$
 #let CAT    = $bold("CAT")$
+#let Mon    = $bold("Mon")$
 #let Ring   = $bold("Ring")$
+#let CRing  = $bold("CRing")$
 #let Vect   = $bold("Vect")$
+#let FDVect = $bold("FDVect")$
 #let GrAb   = $bold("GrAb")$
 #let Toph   = $bold("Toph")$
 #let HoTop  = $bold("HoTop")$

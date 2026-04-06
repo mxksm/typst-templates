@@ -13,7 +13,14 @@
   supplement: none,
 )
 
-#set heading(numbering: "1.")
+#set heading(numbering: (..nums) => {
+  let pos = nums.pos()
+  if pos.len() == 1 {
+    numbering("I", pos.at(0))
+  } else {
+    numbering("1.1", ..pos.slice(1))
+  }
+})
 
 #set table(
   stroke: (x, y) => {
@@ -42,32 +49,16 @@
 
 //#set heading(numbering: (n1, ..x) => numbering("1.1", n1 - 1, ..x))
 
-// convert it to string
-#let to-string(it) = {
-  if type(it) == str {
-    it
-  } else if type(it) != content {
-    str(it)
-  } else if it.has("text") {
-    it.text
-  } else if it.has("children") {
-    it.children.map(to-string).join()
-  } else if it.has("body") {
-    to-string(it.body)
-  } else if it == [ ] {
-    " "
-  }
-}
-
 // Doesn't work if i put it in noteworthy.typ
 #show heading.where(level: 1): it => {
   let width = 70%
   npage
   if it.numbering != none {
-    block(width: 100%)[
-      #v(4em)
+    block(width: 75%)[
       #set text(25pt)
-      Lecture #counter(heading).display(it.numbering) \ \
+      #set align(center)
+      #counter(heading).display(it.numbering) \
+      #line(length: 100%)
       #set text(18pt, weight: "regular")
       #block(width: width, breakable: true)[*#it.body*]
       #v(4em)
@@ -77,8 +68,6 @@
     block(width: 100%)[
       #v(4em)
       #set text(25pt)
-      Lecture 0
-      #set text(18pt, weight: "regular")
       #block(width: width, breakable: true)[*#it.body*]
       #v(4em)
     ]
@@ -86,8 +75,12 @@
 }
 
 #show heading.where(level: 2): it => {
+  if it.numbering != none and not counter(heading).display(it.numbering).ends-with("1.") {
+    npage
+  }
   block(width: 100%)[
     #v(0.5em)
+    #set align(center)
     #counter(heading).display(it.numbering) #it.body
     #v(0.5em)
   ]

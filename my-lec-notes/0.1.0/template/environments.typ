@@ -22,12 +22,12 @@
       if n == none {
         text(weight: "bold")[#s] 
         h(0.5em) 
-        [#smallcaps(t).]
+        [(#t.)]
       }
       else  {
         text(weight: "bold")[#s #n] 
         h(0.5em) 
-        [#smallcaps(t).]
+        [(#t.)]
       }
     }
   },
@@ -36,6 +36,7 @@
     b
   },
   fmt-suffix: lozenge.with(force: false)
+  //fmt-suffix: (..args) => place(bottom + right, dy: -0.15em)[$lozenge.filled.medium$]
 )
 
 #let new-thm(environment, title: none, label: none, number: none, body) = {
@@ -50,7 +51,7 @@
     } else {
       environment(title: title, label: label, number: number)[#body]
     }
-    #v(0.75em)
+    //#v(0.75em)
   ]
 }
 
@@ -178,7 +179,7 @@
   number: none, 
   fmt-prefix: (s, _, t) => {
     text(weight: "bold", stretch: 85%)[#s.]
-    if t != none [ #smallcaps(t).]
+    if t != none [ #t.]
     h(0.5em)
   },
 )
@@ -192,7 +193,7 @@
   number: none, 
   fmt-prefix: (s, _, t) => {
     text(weight: "bold", stretch: 85%)[#s:]
-    if t != none [ #smallcaps(t).]
+    if t != none [ #t.]
     h(0.5em)
   },
   fmt-suffix: qed.with(force: false)
