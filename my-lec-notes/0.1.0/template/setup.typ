@@ -2,30 +2,36 @@
 #import "environments.typ": *
 #import "@preview/hydra:0.6.2": hydra
 
+#let to-string(it) = {
+  if type(it) == str {
+    it
+  } else if type(it) != content {
+    str(it)
+  } else if it.has("text") {
+    it.text
+  } else if it.has("children") {
+    it.children.map(to-string).join()
+  } else if it.has("body") {
+    to-string(it.body)
+  } else if it == [ ] {
+    " "
+  }
+}
+
 #let project(title: title, authors: authors, show_info: true, body) = {
   // Set the document's basic properties.
   let title = course + " " + title
   set document(author: authors, title: title)
-  set page(paper: "us-letter")
-  set page(header: context {
-      if here().page() == 1 {
-        let ts = datetime.today().display("[year]-[month]-[day]")
-        align(right, str(here().page()) + h(1fr) + emph("Compiled on " + ts))
+  set page(
+    paper: "us-letter",
+    header: context {
+      if calc.odd(here().page()) {
+        align(right, emph(hydra(1)) + h(1fr) + str(here().page()))
+      } else {
+        align(right, str(here().page()) + h(1fr) + emph(hydra(2)))
       }
-      else {
-        if calc.odd(here().page()) {
-          align(right, h(1fr) + str(here().page()))
-        } 
-        else {
-          align(left, str(here().page()))
-        }
-      }
-      line(length: 100%)
     },
-    footer: context {
-      line(length: 100%)
-    }
-  ) 
+  )
   set text(font-size, font: font, lang: "en")
   show raw: text.with(font: font)
 
@@ -53,17 +59,25 @@
       level: 1
     ): set block(above: 1.2em)
     show outline.entry.where(level: 1): it => {
-      link(
-        it.element.location(),
-        text(weight: "bold")[Lecture #it.prefix()] + " " + strong(emph(it.body())),
-      )
+      if to-string(it.body()) == "Bibliography" {
+        link(
+          it.element.location(),
+          text(weight: "bold")[#it.prefix()] + " " + strong(emph(it.body())),
+        )
+      }
+      else {
+        link(
+          it.element.location(),
+          text(weight: "bold")[#it.prefix().] + " " + strong(emph(it.body())),
+        )
+      }
     }
 
     outline(title: "Table of Contents", depth: 3)
   }
   
   // Main body.
-  set par(justify: true)
+  set par(first-line-indent: 1em, justify: true)
 
   body
 }
