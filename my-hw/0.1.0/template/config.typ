@@ -8,8 +8,8 @@
 
 // questions to include (0 = false, 1 = true)
 #let q = (
-  1, 
-  1, 
+  1,
+  1,
 )
 
 // manual numbering
