@@ -1,7 +1,7 @@
 #import "meta.typ": *
 
 #let title = "PSO " + str(hw_num)
-#let authors = ("Maksim Lavrenko",)
+#let authors = ("",)
 #let font = "New Computer Modern"
 #let code-font = "CMU Typewriter Text"
 #let font-size = 12pt

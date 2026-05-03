@@ -22,12 +22,12 @@
       if n == none {
         text(weight: "bold")[#s] 
         h(0.5em) 
-        [#smallcaps(t).]
+        [(#t).]
       }
       else  {
         text(weight: "bold")[#s #n] 
         h(0.5em) 
-        [#smallcaps(t).]
+        [(#t).]
       }
     }
   },
@@ -170,7 +170,7 @@
   number: none, 
   fmt-prefix: (s, _, t) => {
     text(weight: "bold", stretch: 85%)[#s.]
-    if t != none [ #smallcaps(t).]
+    if t != none [ (#t).]
     h(0.5em)
   },
 )
@@ -184,7 +184,7 @@
   number: none, 
   fmt-prefix: (s, _, t) => {
     text(weight: "bold", stretch: 85%)[#s:]
-    if t != none [ #smallcaps(t).]
+    if t != none [ (#t).]
     h(0.5em)
   },
   fmt-suffix: qed.with(force: false)
@@ -322,3 +322,10 @@
   text(font: code-font)[#body]
 }
 
+#let todo(body) = {
+  text(fill: red)[[TODO: #body]]
+}
+
+#let inco(body) = {
+  text(font: "Inconsolata")[#body]
+}
