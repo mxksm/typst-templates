@@ -101,6 +101,8 @@
 #let bNP = $bN bP$
 #let bPCP = $bP bC bP$
 
+#let ZZ = $bold(Z)$
+
 // ====================
 // ARROW SYMBOLS
 // ====================
@@ -110,11 +112,13 @@
 #let ot      = $stretch(<-)$
 #let too     = $stretch(-->)$
 #let oot     = $stretch(<--)$
+#let bito    = $stretch(<->)$
 #let iff     = $stretch(<==>)$
 #let implies = $stretch(==>)$
 
 // Special arrow types
 #let incl  = $stretch(#sym.arrow.r.hook)$
+#let surj  = $stretch(#sym.arrow.r.twohead)$
 #let rincl = $stretch(#sym.arrow.l.hook)$
 #let mto   = $stretch(#sym.arrow.r.bar)$
 #let rmto  = $stretch(#sym.arrow.l.bar)$
@@ -204,7 +208,6 @@
 #let Var = "Var"
 #let UNSAT = "UNSAT"
 
-#let vec = "vec"
 #let support = "support"
 #let trace = "trace"
 #let vol = "vol"
@@ -224,6 +227,11 @@
 // ====================
 // CATEGORY THEORY & TOPOLOGY
 // ====================
+
+#let catlim   = $limits(lim)_(oot)$
+#let catcolim = $limits(lim)_(too)$
+
+#let nbd = $"nbd"$
 
 // Topology/category theory functions
 #let natTran(A,F,G,B) = $#box(baseline: 40%,
@@ -275,6 +283,8 @@ diagram(
 #let VR = $VV RR$     // vietoris-rips complex
 #let RP = $RR P$      // real projective space
 
+#let Int = $bold("Int")$
+
 // Category names
 #let Ab     = $bold("Ab")$
 #let Ch     = $bold("Ch")$
@@ -288,6 +298,7 @@ diagram(
 #let Ring   = $bold("Ring")$
 #let CRing  = $bold("CRing")$
 #let Vect   = $bold("Vect")$
+#let vec    = $bold("vec")$
 #let FDVect = $bold("FDVect")$
 #let GrAb   = $bold("GrAb")$
 #let Toph   = $bold("Toph")$
@@ -300,6 +311,7 @@ diagram(
 // COMPUTATIONAL TOPOLOGY
 // ====================
 
+#let barc = "barc"
 // Star and link operations
 #let St    = "St"
 #let Lst   = "Lst"
@@ -317,11 +329,13 @@ diagram(
 
 // Linear algebra
 #let rank  = "rank"
+#let rk    = "rk"
 #let coker = "coker"
 
 // Persistent homology
 #let Pers  = "Pers"
 #let Dgm   = "Dgm"
+#let dgm   = "dgm"
 
 // Matrix operations
 #let row   = "row"
@@ -379,46 +393,3 @@ diagram(
 #let sep     = line(length: 100%)
 #let npage   = pagebreak()
 #let qquad   = $quad quad$
-
-// ====================
-// SPECIALIZED FUNCTIONS
-// ====================
-
-// Graded table function
-#let graded_table(parts) = {
-  let rows = ()
-  
-  for (part-index, part) in parts.enumerate() {
-    // Add part header row
-    if parts.len() > 1 {
-      rows = rows + (
-        (text(weight: "bold")[Part #(part-index + 1)], [], [])
-      )
-    }
-    
-    // Process each row in this part (3 elements per row)
-    for i in range(0, part.len(), step: 3) {
-      let self-pts = part.at(i)
-      let max-pts = part.at(i + 1)
-      let desc = part.at(i + 2)
-      
-      rows = rows + (
-        ($#self-pts pt$, $#max-pts pt$, [#desc])
-      )
-    }
-  }
-  
-  figure(
-    box(width: 100%)[
-      #table(
-        columns: (auto, auto, auto),
-        inset: 10pt,
-        align: horizon + left,
-        table.header(
-          [Self-Graded Pts], [Max Rubric Pts], [Rubric Description],
-          ..rows
-        ),
-      )
-    ]
-  )
-}

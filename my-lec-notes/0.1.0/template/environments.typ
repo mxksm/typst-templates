@@ -240,6 +240,8 @@
     let pos = nums.pos()
     if pos.len() != 1 {
       numbering("A.1", ..pos.slice(1))
+    } else {
+      numbering("I.1", ..pos)
     }
   })
   set heading(supplement: "Appendix")
