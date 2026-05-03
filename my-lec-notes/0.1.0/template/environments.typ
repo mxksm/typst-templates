@@ -226,3 +226,23 @@
 #let code(body) = {
   text(font: code-font)[#body]
 }
+
+#let todo(body) = {
+  text(fill: red)[[TODO: #body]]
+}
+
+#let inco(body) = {
+  text(font: "Inconsolata")[#body]
+}
+
+#let appendix(body) = {
+  set heading(numbering: (..nums) => {
+    let pos = nums.pos()
+    if pos.len() != 1 {
+      numbering("A.1", ..pos.slice(1))
+    }
+  })
+  set heading(supplement: "Appendix")
+  counter(heading).update((..c) => (c.pos().at(0), 0))
+  body
+}

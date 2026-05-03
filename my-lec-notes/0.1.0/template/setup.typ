@@ -22,16 +22,29 @@
   // Set the document's basic properties.
   let title = course + " " + title
   set document(author: authors, title: title)
+  
   set page(
     paper: "us-letter",
     header: context {
-      if calc.odd(here().page()) {
-        align(right, emph(hydra(1)) + h(1fr) + str(here().page()))
+      // Alternate alignment based on page number
+      let heading-text = if calc.odd(here().page()) {
+        align(right, emph(hydra(1)))
       } else {
-        align(right, str(here().page()) + h(1fr) + emph(hydra(2)))
+        align(left, emph(hydra(2)))
       }
+      
+      // Stack the heading text and a full-width line
+      stack(
+        spacing: 0.5em,
+        heading-text,
+        line(length: 100%, stroke: 1pt) 
+      )
     },
+    footer: context {
+      align(center, str(here().page()))
+    }
   )
+  
   set text(font-size, font: font, lang: "en")
   show raw: text.with(font: font)
 
@@ -41,7 +54,6 @@
       #box(
         text(weight: "black", size: 25pt, smallcaps(title)),
       )
-    
       // Author information.
       #pad(
         top: 0.5em,

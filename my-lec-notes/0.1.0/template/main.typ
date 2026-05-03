@@ -48,39 +48,42 @@
 #show: equate.with(breakable: true, sub-numbering: false, number-mode: "label")
 
 //#set heading(numbering: (n1, ..x) => numbering("1.1", n1 - 1, ..x))
+#show heading.where(level: 1): set heading(supplement: "Chapter")
 
 // Doesn't work if i put it in noteworthy.typ
 #show heading.where(level: 1): it => {
-  let width = 70%
+  let width = 90%
   npage
   if it.numbering != none {
-    block(width: 75%)[
-      #set text(25pt)
-      #set align(center)
-      #counter(heading).display(it.numbering) \
-      #line(length: 100%)
-      #set text(18pt, weight: "regular")
-      #block(width: width, breakable: true)[*#it.body*]
-      #v(4em)
+    set align(center)
+    block(inset: (x: 1.5cm, y: 2cm))[
+      #set text(22pt)
+      #set align(left)
+      #counter(heading).display(it.numbering).
+      #set text(20pt)
+      *#it.body*
+      #v(1cm)
     ]
   }
   else {
-    block(width: 100%)[
-      #v(4em)
-      #set text(25pt)
-      #block(width: width, breakable: true)[*#it.body*]
-      #v(4em)
+    set align(center)
+    block(inset: (x: 1.5cm, y: 2cm))[
+      #set align(left)
+      #set text(20pt)
+      *#it.body*
+      #v(1cm)
     ]
   }
 }
 
 #show heading.where(level: 2): it => {
-  if it.numbering != none and not counter(heading).display(it.numbering).ends-with("1.") {
+  if it.numbering != none and not counter(heading).display(it.numbering).ends-with("1") {
     npage
   }
   block(width: 100%)[
     #v(0.5em)
     #set align(center)
+    #set text(16pt)
     #counter(heading).display(it.numbering) #it.body
     #v(0.5em)
   ]
@@ -88,6 +91,7 @@
 
 #show heading.where(level: 3): it => {
   block(width: 100%)[
+    #set text(15pt)
     #counter(heading).display(it.numbering) #it.body
   ]
 }
