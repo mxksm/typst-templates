@@ -47,33 +47,26 @@
 #show link: set text(blue)
 #show: equate.with(breakable: true, sub-numbering: false, number-mode: "label")
 
-//#set heading(numbering: (n1, ..x) => numbering("1.1", n1 - 1, ..x))
 #show heading.where(level: 1): set heading(supplement: "Chapter")
 
 // Doesn't work if i put it in noteworthy.typ
 #show heading.where(level: 1): it => {
-  let width = 90%
   npage
-  if it.numbering != none {
-    set align(center)
-    block(inset: (x: 1.5cm, y: 2cm))[
-      #set text(22pt)
-      #set align(left)
-      #counter(heading).display(it.numbering).
-      #set text(20pt)
-      *#it.body*
-      #v(1cm)
+  block(inset: (y: 2cm))[
+    #set align(left)
+    #if it.numbering != none [
+      #h(1cm)
+      #text(
+        font: "Linux Biolinum",
+        number-type: "old-style",
+        weight: "regular",
+        size: 4.5em,
+        fill: rgb("#9A8F9E")
+      )[#counter(heading).display(it.numbering)]
+      \ \
     ]
-  }
-  else {
-    set align(center)
-    block(inset: (x: 1.5cm, y: 2cm))[
-      #set align(left)
-      #set text(20pt)
-      *#it.body*
-      #v(1cm)
-    ]
-  }
+    #text(size: 22pt)[*#it.body*]
+  ]
 }
 
 #show heading.where(level: 2): it => {
@@ -107,8 +100,6 @@
     #it.body
   ]
 }
-
-//#show heading: smallcaps
 
 // =======
 // CONTENT

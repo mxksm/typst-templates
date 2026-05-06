@@ -2,7 +2,7 @@
 
 #let title = "PSO " + str(hw_num)
 #let authors = ("",)
-#let font = "New Computer Modern"
+#let font = "Linux Libertine"
 #let code-font = "CMU Typewriter Text"
 #let font-size = 12pt
 
