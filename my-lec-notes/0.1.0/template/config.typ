@@ -2,6 +2,6 @@
 
 #let title = "Notes"
 #let authors = ("Maksim Lavrenko",)
-#let font = "New Computer Modern"
+#let font = "Linux Libertine"
 #let code-font = "CMU Typewriter Text"
 #let font-size = 13pt
