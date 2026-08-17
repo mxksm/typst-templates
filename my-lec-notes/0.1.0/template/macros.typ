@@ -151,7 +151,7 @@
     ]
   ]
 )
-#let ip(u, v) = $lr(chevron.l #u, #v chevron.r)$
+#let ip = sym.chevron
 #let over(s) = $overline(#s)$
 
 // ====================

@@ -9,8 +9,19 @@
  
 #let lozenge = qed.with(suffix: [#h(1fr) $lozenge.filled.medium$])
 
+#let mathlozenge() = {
+  v(-1.8em)
+  lozenge()
+}
+
+#let mathqed() = {
+  v(-1.8em)
+  qed()
+}
+
 #let base-thm = theorem.with(
   fmt-prefix: (s, n, t) => {
+    v(0.5em)
     if t == none {
       if n == none {
         text(weight: "bold")[#s.]
@@ -34,9 +45,9 @@
   fmt-body: (b, p) => {
     h(0.5em)
     b
+    v(0.5em)
   },
   fmt-suffix: lozenge.with(force: false)
-  //fmt-suffix: (..args) => place(bottom + right, dy: -0.15em)[$lozenge.filled.medium$]
 )
 
 #let new-thm(environment, title: none, label: none, number: none, body) = {
@@ -212,7 +223,7 @@
     } else {
       emph(text[#s])
       h(0.5em) 
-      [#emph("of") #t.]
+      [#emph("of ") #t.]
     }
   },
   number: none, 
@@ -248,3 +259,19 @@
   counter(heading).update((..c) => (c.pos().at(0), 0))
   body
 }
+
+#let pseudocode-comment(body) = {
+  text(fill:green)[_\/$ast$ #body $ast$\/_]
+}
+
+#let my-diagram(spaced: true, ..args) = [
+  #if spaced {v(1em)}
+  #fletcher.diagram(
+    label-size: 0.8em,
+    spacing: 2cm,
+    ..args
+  )
+  #if spaced {v(2em)}
+]
+
+#let diagram = my-diagram

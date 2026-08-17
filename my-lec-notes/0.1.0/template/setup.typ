@@ -68,7 +68,7 @@
   }
   
   // Main body.
-  set par(first-line-indent: 1em, justify: true)
+  set par(first-line-indent: 1em, justify: true, spacing: 0.65em)
 
   body
 }

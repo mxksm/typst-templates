@@ -39,6 +39,12 @@
 #show link: set text(blue)
 #show: equate.with(breakable: true, sub-numbering: false, number-mode: "label")
 
+#show figure.caption.where(body: []): it => [
+  #it.supplement #context it.counter.display(it.numbering)
+]
+
+#show sym.lt.eq: math.scripts
+
 // =======
 // CONTENT
 // =======

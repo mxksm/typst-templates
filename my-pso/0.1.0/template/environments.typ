@@ -9,8 +9,19 @@
  
 #let lozenge = qed.with(suffix: [#h(1fr) $lozenge.filled.medium$])
 
+#let mathlozenge() = {
+  v(-1.8em)
+  lozenge()
+}
+
+#let mathqed() = {
+  v(-1.8em)
+  qed()
+}
+
 #let base-thm = theorem.with(
   fmt-prefix: (s, n, t) => {
+    v(0.5em)
     if t == none {
       if n == none {
         text(weight: "bold")[#s.]
@@ -22,18 +33,19 @@
       if n == none {
         text(weight: "bold")[#s] 
         h(0.5em) 
-        [(#t).]
+        [(#t.)]
       }
       else  {
         text(weight: "bold")[#s #n] 
         h(0.5em) 
-        [(#t).]
+        [(#t.)]
       }
     }
   },
   fmt-body: (b, p) => {
     h(0.5em)
     b
+    v(0.5em)
   },
   fmt-suffix: lozenge.with(force: false)
 )
@@ -203,7 +215,7 @@
     } else {
       emph(text[#s])
       h(0.5em) 
-      [#emph("of") #t.]
+      [#emph("of ") #t.]
     }
   },
   number: none, 
@@ -329,3 +341,19 @@
 #let inco(body) = {
   text(font: "Inconsolata")[#body]
 }
+
+#let pseudocode-comment(body) = {
+  text(fill:green)[_\/$ast$ #body $ast$\/_]
+}
+
+#let my-diagram(spaced: true, ..args) = [
+  #if spaced {v(1em)}
+  #fletcher.diagram(
+    label-size: 0.8em,
+    spacing: 2cm,
+    ..args
+  )
+  #if spaced {v(2em)}
+]
+
+#let diagram = my-diagram

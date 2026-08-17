@@ -47,6 +47,12 @@
 #show link: set text(blue)
 #show: equate.with(breakable: true, sub-numbering: false, number-mode: "label")
 
+#show figure.caption.where(body: []): it => [
+  #it.supplement #context it.counter.display(it.numbering)
+]
+
+#show sym.lt.eq: math.scripts
+
 #show heading.where(level: 1): set heading(supplement: "Chapter")
 
 // Doesn't work if i put it in noteworthy.typ
@@ -60,12 +66,12 @@
         font: "Linux Biolinum",
         number-type: "old-style",
         weight: "regular",
-        size: 4.5em,
-        fill: rgb("#9A8F9E")
+        size: font-size * 6,
+        fill: rgb("#A2A4CA")
       )[#counter(heading).display(it.numbering)]
       \ \
     ]
-    #text(size: 22pt)[*#it.body*]
+    #text(font-size * 1.65)[*#it.body*]
   ]
 }
 
@@ -76,7 +82,7 @@
   block(width: 100%)[
     #v(0.5em)
     #set align(center)
-    #set text(16pt)
+    #set text(font-size * 1.25)
     #counter(heading).display(it.numbering) #it.body
     #v(0.5em)
   ]
@@ -84,7 +90,7 @@
 
 #show heading.where(level: 3): it => {
   block(width: 100%)[
-    #set text(15pt)
+    #set text(font-size * 1.1)
     #counter(heading).display(it.numbering) #it.body
   ]
 }
