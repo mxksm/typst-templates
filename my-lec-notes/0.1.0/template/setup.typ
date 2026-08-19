@@ -18,6 +18,64 @@
   }
 }
 
+#let show-theorem-ref(it) = {
+  let el = it.element
+  if el != none and el.func() == metadata and type(el.value) == dictionary and el.value.at("theorem-kind", default: none) != none {
+    let val = el.value
+    let number = strip-leading-number-part(val.number)
+
+    if it.supplement == [?] {
+      link(it.target, [#val.supplement])
+    } else if val.title != none {
+      if number != none {
+        if it.supplement == [-] {
+          link(it.target, [#val.supplement #number])
+        } else if it.supplement == [--] {
+          link(it.target, [#number])
+        } else if it.supplement == [!!!] {
+          link(it.target, [#val.title])
+        } else if it.supplement == [!!] {
+          link(it.target, [#val.title (#number)])
+        } else if it.supplement == [!] {
+          link(it.target, [#val.title (#val.supplement #number)])
+        } else if it.supplement == auto {
+          link(it.target, [#val.supplement #number (#val.title)])
+        } else {
+          link(it.target, [#it.supplement #number (#val.title)])
+        }
+      } else {
+        if it.supplement == [-] or it.supplement == auto {
+          link(it.target, [#val.supplement (#val.title)])
+        } else if it.supplement == [--] {
+          link(it.target, [(#val.title)])
+        } else if it.supplement == [!!!] or it.supplement == [!!] {
+          link(it.target, [#val.title])
+        } else if it.supplement == [!] {
+          link(it.target, [#val.title (#val.supplement)])
+        } else {
+          link(it.target, [#it.supplement (#val.title)])
+        }
+      }
+    } else if number != none {
+      if it.supplement == [-] or it.supplement == [!] or it.supplement == [!!] or it.supplement == [!!!] or it.supplement == auto {
+        link(it.target, [#val.supplement #number])
+      } else if it.supplement == [--] {
+        link(it.target, [#number])
+      } else {
+        link(it.target, [#it.supplement #number])
+      }
+    } else {
+      if it.supplement == [-] or it.supplement == [--] or it.supplement == [!] or it.supplement == [!!] or it.supplement == [!!!] or it.supplement == auto {
+        link(it.target, [#val.supplement])
+      } else {
+        link(it.target, [#it.supplement #number])
+      }
+    }
+  } else {
+    it
+  }
+}
+
 #let project(title: title, authors: authors, show_info: true, body) = {
   // Set the document's basic properties.
   let title = course + " " + title

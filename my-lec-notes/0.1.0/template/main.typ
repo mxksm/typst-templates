@@ -42,7 +42,7 @@
 // ====
 #show: project.with()
 #show table: block.with(stroke: (y: 1pt))
-#show ref: theoretic.show-ref
+#show ref: show-theorem-ref
 #show ref: link => text(blue, link)
 #show link: set text(blue)
 #show: equate.with(breakable: true, sub-numbering: false, number-mode: "label")
