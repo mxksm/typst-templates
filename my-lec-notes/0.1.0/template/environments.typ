@@ -10,17 +10,52 @@
 #let lozenge = qed.with(suffix: [#h(1fr) $lozenge.filled.medium$])
 
 #let mathlozenge() = {
-  v(-1.8em)
+  v(-1.6em)
   lozenge()
 }
 
 #let mathqed() = {
-  v(-1.8em)
+  v(-1.4em)
   qed()
+}
+
+#let diagramlozenge() = {
+  v(-1.4em)
+  lozenge()
+}
+
+#let to-string(it) = {
+  if type(it) == str {
+    it
+  } else if type(it) != content {
+    str(it)
+  } else if it.has("text") {
+    it.text
+  } else if it.has("children") {
+    it.children.map(to-string).join()
+  } else if it.has("body") {
+    to-string(it.body)
+  } else if it == [ ] {
+    " "
+  }
+}
+
+#let strip-leading-number-part(number) = {
+  if number == none {
+    none
+  } else {
+    let parts = to-string(number).split(".")
+    if parts.len() > 1 {
+      parts.slice(1).join(".")
+    } else {
+      number
+    }
+  }
 }
 
 #let base-thm = theorem.with(
   fmt-prefix: (s, n, t) => {
+    let n = strip-leading-number-part(n)
     v(0.5em)
     if t == none {
       if n == none {
@@ -138,6 +173,11 @@
   new-thm(base-algorithm, title: title, label: label, number: number)[#body]
 }
 
+#let base-observation = base-thm.with(kind: "observation", supplement: "Observation")
+#let observation(body, title: none, label: none, number: none) = {
+  new-thm(base-observation, title: title, label: label, number: number)[#body]
+}
+
 #let base-construction = base-thm.with(kind: "construction", supplement: "Construction")
 #let construction(body, title: none, label: none, number: none) = {
   new-thm(base-construction, title: title, label: label, number: number)[#body]
@@ -222,8 +262,7 @@
       emph(text[#s.])
     } else {
       emph(text[#s])
-      h(0.5em) 
-      [#emph("of ") #t.]
+      [#emph(" of ") #t.]
     }
   },
   number: none, 
@@ -267,7 +306,7 @@
 #let my-diagram(spaced: true, ..args) = [
   #if spaced {v(1em)}
   #fletcher.diagram(
-    label-size: 0.8em,
+    label-size: 1em,
     spacing: 2cm,
     ..args
   )
